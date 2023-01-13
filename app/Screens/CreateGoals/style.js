@@ -3,8 +3,8 @@ const styles = StyleSheet.create({
   // title: {color: COLORS.white, fontWeight: 'bold', fontSize: 18},
   container: {
     display: 'flex',
-    padding: 20,
-    height: '100%',
+    padding: 10,
+    height: 1000,
     width: '100%',
     backgroundColor: '#EDEADE',
     // flex: 1,
@@ -33,7 +33,8 @@ const styles = StyleSheet.create({
     // margin:"20%",
     // top:"10%",
     borderRadius: 5,
-    top: '5%',
+    top: '2%',
+  
   },
   button: {
     flexDirection: 'column',
@@ -41,7 +42,7 @@ const styles = StyleSheet.create({
     width: 300,
     display: 'flex',
     justifyContent: 'center',
-    marginHorizontal: 30,
+    marginHorizontal: 50,
     // alignItems:'center',
     marginTop: '20%',
     borderRadius: 50,
@@ -49,6 +50,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#87CEEB',
     alignItems: 'center',
     paddingVertical: 5,
+    marginBottom:30
   },
   createGoalsContainer: {
     display: 'flex',
@@ -66,3 +68,4 @@ const styles = StyleSheet.create({
     // borderColor:"#EDEADE"
   },
 });
+export default styles;

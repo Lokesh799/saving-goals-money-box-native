@@ -6,17 +6,15 @@ import {
   Button,
   Pressable,
   Image,
+  TouchableOpacity
 } from 'react-native';
 import React from 'react';
 import styles from './style';
+import { useNavigation } from '@react-navigation/native';
 const CreatGoals = () => {
+  const navigation = useNavigation();
   return (
     <SafeAreaView>
-      <StatusBar
-        backgroundColor="transparent"
-        translucent={true}
-        animated={true}
-      />
       <View style={styles.container}>
         <View style={styles.boxContainer}>
           <View style={styles.boxStyle}>
@@ -33,8 +31,8 @@ const CreatGoals = () => {
                 style={{width: 20, height: 30, marginLeft: 10, marginTop: 5}}
               />
             </View>
-            <View style={{paddingRight: 40}}>
-              <Text style={{fontWeight: '700', color: '#000'}}>Bike</Text>
+            <View style={{paddingRight: "50%"}}>
+              <Text style={{fontWeight: '700', color: '#000',fontSize:20}}>Goals</Text>
               <Text>by jan 12,2023</Text>
             </View>
           </View>
@@ -53,18 +51,22 @@ const CreatGoals = () => {
             style={{
               alignSelf: 'center',
               justifyContent: 'center',
-              marginHorizontal: '50%',
+              // marginHorizontal: '30%',
+              marginTop:'20%'
             }}>
+           <TouchableOpacity onPress={()=>navigation.navigate("Home")}>
             <Image
               source={require('../../assets/plus-outline.png')}
               style={{
                 width: 20,
                 height: 30,
-                alignSelf: 'center',
-                justifyContent: 'center',
+                // alignSelf: 'center',
+                // justifyContent: 'center',
                 display: 'flex',
               }}
+              
             />
+            </TouchableOpacity>
           </View>
         </View>
       </View>
