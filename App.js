@@ -27,6 +27,7 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 
 import ContributionList from './app/components/ContributionList';
+import CreatGoals from './app/components/CreateGoals';
 
 /* $FlowFixMe[missing-local-annot] The type annotation(s) required by Flow's
  * LTI update could not be added via codemod */
@@ -92,7 +93,8 @@ const App: () => Node = () => {
           </Section>
           <LearnMoreLinks />
         </View> */}
-        <ContributionList />
+        <ContributionList /> 
+        <CreatGoals />
       </ScrollView>
     </SafeAreaView>
   );
