@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-import type {Node} from 'react';
+
 import {
   SafeAreaView,
   ScrollView,
@@ -18,6 +18,7 @@ import {
   View,
 } from 'react-native';
 
+import {DataTable} from 'react-native-paper';
 import {
   Colors,
   DebugInstructions,
@@ -25,10 +26,11 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import CreatGoals from './components/CreateGoals';
 
 /* $FlowFixMe[missing-local-annot] The type annotation(s) required by Flow's
  * LTI update could not be added via codemod */
-const Section = ({children, title}): Node => {
+const Section = ({children, title}) => {
   const isDarkMode = useColorScheme() === 'dark';
   return (
     <View style={styles.sectionContainer}>
@@ -54,7 +56,7 @@ const Section = ({children, title}): Node => {
   );
 };
 
-const App: () => Node = () => {
+const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
@@ -63,39 +65,45 @@ const App: () => Node = () => {
 
   return (
     <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.js</Text> to change this
-            screen and then come back to see your edits.here setup dome
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
+      <CreatGoals/>
+      {/* <DataTable style={styles.container}>
+      <DataTable.Header style={styles.tableHeader}>
+        <DataTable.Title>Name</DataTable.Title>
+        <DataTable.Title>Favourite Food</DataTable.Title>
+        <DataTable.Title>Age</DataTable.Title>
+      </DataTable.Header>
+      <DataTable.Row>
+        <DataTable.Cell>Radhika</DataTable.Cell>
+        <DataTable.Cell>Dosa</DataTable.Cell>
+        <DataTable.Cell>23</DataTable.Cell>
+      </DataTable.Row>
+      <DataTable.Row>
+        <DataTable.Cell>Krishna</DataTable.Cell>
+        <DataTable.Cell>Uttapam</DataTable.Cell>
+        <DataTable.Cell>26</DataTable.Cell>
+      </DataTable.Row>
+      <DataTable.Row>
+        <DataTable.Cell>Vanshika</DataTable.Cell>
+        <DataTable.Cell>Brownie</DataTable.Cell>
+        <DataTable.Cell>20</DataTable.Cell>
+      </DataTable.Row>
+      <DataTable.Row>
+        <DataTable.Cell>Teena</DataTable.Cell>
+        <DataTable.Cell>Pizza</DataTable.Cell>
+        <DataTable.Cell>24</DataTable.Cell>
+      </DataTable.Row>
+    </DataTable> */}
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  container:{
+   padding:30,
+  },
+  tableHeader:{
+    backgroundColor:"#DCDCDC"
+  },
   sectionContainer: {
     marginTop: 32,
     paddingHorizontal: 24,
