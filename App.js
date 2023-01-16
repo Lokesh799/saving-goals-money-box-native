@@ -17,7 +17,7 @@ import CreatGoals from './app/Screens/CreateGoals';
 // import 'react-native-gesture-handler'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+// import {createNativeStackNavigator} from '@react-navigation/native-stack';
             const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
@@ -25,7 +25,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
   // const Stack = createStackNavigator(); 
-  const Stack = createNativeStackNavigator();
+  // const Stack = createNativeStackNavigator();
   
 const Tab = createBottomTabNavigator();  
   return (
