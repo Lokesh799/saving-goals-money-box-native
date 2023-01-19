@@ -1,40 +1,33 @@
 import React from 'react';
 import {
   StyleSheet,
-  Text,
   useColorScheme,
-  View,
 } from 'react-native';
 
 import {
   Colors,
 } from 'react-native/Libraries/NewAppScreen';
-
 import ContributionList from './app/components/ContributionList';
-import CreatGoals from './app/Screens/CreateGoals';
-// import { createStackNavigator } from '@react-navigation/native-stack';
-// import NavigationContainer from 'react-native-navigation-container';
-// import 'react-native-gesture-handler'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-            const App = () => {
-  const isDarkMode = useColorScheme() === 'dark';
+import GoalsMain from './app/Screens/CreateGoals';
+import GoalsInfo from './app/Screens/CreateGoals/GoalsInfo';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
+
+const App = () => {
+  const isDarkMode = useColorScheme() === 'dark';
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-  // const Stack = createStackNavigator(); 
-  const Stack = createNativeStackNavigator();
-  
-const Tab = createBottomTabNavigator();  
-  return (
+  }
+
+const Stack = createStackNavigator(); 
+ return (
     <NavigationContainer>
-    <Tab.Navigator>
-    <Tab.Screen name="Settings" component={CreatGoals} />
-    <Tab.Screen name="Home" component={ContributionList} />
-  </Tab.Navigator>
-  </NavigationContainer>      
+      <Stack.Navigator screenOptions={{headerShown:false}}>  
+        <Stack.Screen name="Home" component={GoalsMain}  />
+        <Stack.Screen name="GoalsInfo" component={GoalsInfo}  />
+      </Stack.Navigator>
+   </NavigationContainer>      
   );
 };
 
