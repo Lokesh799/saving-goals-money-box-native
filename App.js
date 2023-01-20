@@ -5,7 +5,7 @@ import React from 'react';
 import ContributionList from './app/screens/ContributionList';
 import CreatGoals from './app/screens/CreateGoals';
 import MainScreen from './app/screens/MainScreen';
-import AddGoals from './app/screens/ContributionList/ContributionForm';
+import ContributionForm from './app/screens/ContributionList/ContributionForm';
 
 // importing modules and library
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -19,7 +19,7 @@ const App = () => {
         <Tab.Screen name="MainScreen" component={MainScreen} />
         <Tab.Screen name="Settings" component={CreatGoals} />
         <Tab.Screen name="Home" component={ContributionList} />
-        <Tab.Screen name="Form" component={AddGoals} />
+        <Tab.Screen name="Form" component={ContributionForm} />
       </Tab.Navigator>
     </NavigationContainer>
   );

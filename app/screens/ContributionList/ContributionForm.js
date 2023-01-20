@@ -16,7 +16,7 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import Icon from 'react-native-vector-icons/AntDesign';
 import moment from 'moment';
 
-const AddGoals = () => {
+const ContributionForm = () => {
   const navigation = useNavigation();
   const [date, setDate] = useState('2016-05-15');
   const [amount, onChangeAmount] = useState('');
@@ -69,4 +69,4 @@ const AddGoals = () => {
   );
 };
 
-export default AddGoals;
+export default ContributionForm;
