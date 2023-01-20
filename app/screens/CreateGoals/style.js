@@ -85,6 +85,12 @@ const styles = StyleSheet.create({
     padding: 10,
     borderColor: 'grey',
   },
+  button: {
+    paddingTop: 100,
+    margin: 12,
+    height: 20,
+    padding: 10,
+    color: '#f194ff',
+  },
 });
 export default styles;
-

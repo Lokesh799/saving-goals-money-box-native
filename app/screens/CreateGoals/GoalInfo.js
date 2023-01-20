@@ -1,12 +1,13 @@
-import {View, Text} from 'react-native';
+import {View, Text, Button} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 import React, {useState} from 'react';
 import styles from './style';
 import {DataTable} from 'react-native-paper';
 
 const GoalsInfo = () => {
+  const navigation = useNavigation();
   return (
     <>
- 
       <View style={{marginTop: 40}}>
         <DataTable style={{padding: 5}}>
           <DataTable.Header style={{backgroundColor: '#DCDCDC'}}>
@@ -33,6 +34,11 @@ const GoalsInfo = () => {
           <Text style={styles.YetPlanned}> Yet not Planned</Text>
         </View>
       </View>
+      <Button
+        style={styles.button}
+        title="Goal Contribution"
+        onPress={() => navigation.navigate('contributionList')}
+      />
     </>
   );
 };

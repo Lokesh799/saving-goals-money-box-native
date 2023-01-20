@@ -9,6 +9,7 @@ import {
   View,
 } from 'react-native';
 import {Icon} from 'react-native-elements';
+import AddGoalsBtn from '../../components/AddGoalBtn';
 
 const DATA = [
   {
@@ -58,7 +59,7 @@ FlatListItemSeparator = () => {
   );
 };
 
-const ContributionList = () => {
+const ContributionList = props => {
   const [selectedId, setSelectedId] = useState();
 
   const renderItem = ({item}) => {
@@ -67,6 +68,7 @@ const ContributionList = () => {
 
     return (
       <>
+        {/* <AddGoalsBtn {...props} /> */}
         <Item
           item={item}
           onPress={() => setSelectedId(item.id)}
