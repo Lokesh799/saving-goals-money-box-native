@@ -2,9 +2,10 @@ import {View, TouchableOpacity, Text} from 'react-native';
 import React, {useState} from 'react';
 import styles from './style';
 import Icon from 'react-native-vector-icons/AntDesign';
+import {useNavigation} from '@react-navigation/native';
 
 const CreateGoals = () => {
-
+  const navigation = useNavigation();
   return (
     <View style={[styles.createGoalsContainer, {marginTop: 10}]}>
       <View
@@ -13,8 +14,7 @@ const CreateGoals = () => {
           justifyContent: 'center',
           marginTop: '20%',
         }}>
-         
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('AddGoals')}>
           <Icon
             name="plus"
             style={{textAlign: 'center', justifyContent: 'center'}}

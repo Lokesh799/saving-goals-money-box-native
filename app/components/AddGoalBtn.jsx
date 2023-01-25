@@ -1,8 +1,36 @@
 import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
-const AddGoalsBtn = props => {
+const ListHeader = () => {
+  const navigation = useNavigation();
+  return (
+    <View style={styles.container}>
+      <AntDesign
+        name="left"
+        size={30}
+        style={styles.back}
+        onPress={() => navigation.navigate('GoalsInfo')}
+      />
+      <View style={styles.view1}>
+        <Text style={styles.headertxt}> Contribution </Text>
+      </View>
+
+      <View style={styles.view2}>
+        <TouchableOpacity>
+          <Text
+            style={styles.plusbtn}
+            onPress={() => navigation.navigate('Form')}>
+            +
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+};
+
+const MainHeader = props => {
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
@@ -20,6 +48,17 @@ const AddGoalsBtn = props => {
         </TouchableOpacity>
       </View>
     </View>
+  );
+};
+
+const AddGoalsBtn = ({props, mainHeaderstate, listHeader}) => {
+  const navigation = useNavigation();
+  return (
+    <>
+      {mainHeaderstate && <MainHeader {...props} />}
+      {listHeader && <ListHeader {...props} />}
+      {/* {contributionHeader && <ContributionFormHeader {...props} />} */}
+    </>
   );
 };
 const styles = StyleSheet.create({
@@ -46,6 +85,14 @@ const styles = StyleSheet.create({
     paddingRight: 15,
     marginBottom: 6,
     textAlign: 'right',
+    marginRight: 50,
+  },
+  back: {
+    color: 'white',
+    fontSize: 32,
+    paddingLeft: 10,
+    marginBottom: 30,
+    paddingTop: 10,
   },
 });
 export default AddGoalsBtn;

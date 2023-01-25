@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   FlatList,
   SafeAreaView,
@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import {Icon} from 'react-native-elements';
 import AddGoalsBtn from '../../components/AddGoalBtn';
+import {AsyncStorage} from 'react-native';
 
 const DATA = [
   {
@@ -34,61 +35,52 @@ const DATA = [
   },
 ];
 
-const Item = ({item, onPress, backgroundColor, textColor}) => (
-  <TouchableOpacity onPress={onPress} style={[styles.item, {backgroundColor}]}>
-    <Text style={[styles.title, {color: textColor}, styles.date]}>
-      {item.date}{' '}
-      <View
-        style={{
-          width: 50,
-        }}
-      />{' '}
-      {item.title}{' '}
-    </Text>
-  </TouchableOpacity>
-);
-
-FlatListItemSeparator = () => {
+const Item = ({title}) => {
+  console.log('heretititit', title);
   return (
-    <View
-      style={{
-        width: 30,
-        backgroundColor: '#000',
-      }}
-    />
+    <View style={styles.item}>
+      <Text style={styles.title}>{title}</Text>
+    </View>
   );
 };
 
 const ContributionList = props => {
   const [selectedId, setSelectedId] = useState();
+  const [listHeader, setlistHeader] = useState(true);
+  const [listData, setListData] = useState();
 
-  const renderItem = ({item}) => {
-    const backgroundColor = item.id === selectedId ? '#dcdcdc' : '#fffaf0';
-    const color = item.id === selectedId ? 'black' : 'black';
+  useEffect(() => {
+    getUser();
+  }, []);
 
-    return (
-      <>
-        {/* <AddGoalsBtn {...props} /> */}
-        <Item
-          item={item}
-          onPress={() => setSelectedId(item.id)}
-          backgroundColor={backgroundColor}
-          textColor={color}
-        />
-      </>
-    );
+  const getUser = async () => {
+    try {
+      const savedUser = await AsyncStorage.getItem('user');
+      const currentUser = JSON.parse(savedUser);
+      setListData(currentUser);
+    } catch (error) {
+      console.log(error);
+    }
   };
-
   return (
-    <SafeAreaView style={styles.container}>
-      <FlatList
-        data={DATA}
-        renderItem={renderItem}
-        ItemSeparatorComponent={FlatListItemSeparator}
-        keyExtractor={item => item.id}
-        extraData={selectedId}
-      />
-    </SafeAreaView>
+    <>
+      <AddGoalsBtn listHeader={listHeader} />
+      <SafeAreaView style={styles.container}>
+        <FlatList
+          data={Object?.keys(listData || {})}
+          renderItem={({item}) => {
+            return (
+              <>
+                <View style={styles.item}>
+                  <Text style={styles.title}>{listData[item]?.date}</Text>
+                  <Text style={styles.title}>{listData[item]?.amount}</Text>
+                </View>
+              </>
+            );
+          }}
+        />
+      </SafeAreaView>
+    </>
   );
 };
 
