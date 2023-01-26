@@ -15,7 +15,12 @@ const MainScreen = props => {
 
   return (
     <View>
-      <SharedHeader iconRight="plus" navigationRight="AddGoals" title="Goals" />
+      <SharedHeader
+        iconRight="plus"
+        navigationRight="AddGoals"
+        title="Goals"
+        iconLeft="bars"
+      />
       <ImageBackground
         source={{
           uri: 'https://img.lovepik.com/free-png/20210918/lovepik-vector-archery-png-image_400178690_wh300.png',
@@ -35,24 +40,30 @@ const styles = StyleSheet.create({
   addGoalBtn: {
     backgroundColor: 'green',
     color: 'white',
-    fontSize: 25,
-    margin: 'auto',
+    fontSize: 20,
+    fontFamily: 'Serif',
+    fontWeight: 'bold',
     textAlign: 'center',
     width: '50%',
+    borderRadius: 10,
+    height: 40,
+    padding: 5,
   },
   bgImg: {
     height: '60%',
-    marginTop: 100,
+    marginTop: 70,
     width: '100%',
   },
   btnArea: {
     alignItems: 'center',
     justifyContent: 'center',
-    margin: 'auto',
     width: '95%',
   },
   infoText: {
     marginBottom: 20,
+    fontSize: 20,
+    fontFamily: 'Cochin',
+    fontWeight: 'bold',
   },
 });
 

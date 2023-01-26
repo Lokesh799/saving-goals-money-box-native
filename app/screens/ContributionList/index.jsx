@@ -12,8 +12,10 @@ import {Icon} from 'react-native-elements';
 import AddGoalsBtn from '../../sharedHeader';
 import SharedHeader from '../../sharedHeader';
 import {AsyncStorage} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 
 const ContributionList = props => {
+  const navigation = useNavigation();
   const [selectedId, setSelectedId] = useState();
   const [listData, setListData] = useState();
 
@@ -41,14 +43,28 @@ const ContributionList = props => {
       />
       <SafeAreaView style={styles.container}>
         <FlatList
+          style={{overflow: 'hidden'}}
           data={Object?.keys(listData || {})}
           renderItem={({item}) => {
             return (
               <>
-                <View style={styles.item}>
-                  <Text style={styles.title}>{listData[item]?.date}</Text>
-                  <Text style={styles.title}>{listData[item]?.amount}</Text>
-                </View>
+                <TouchableOpacity onPress={() => navigation.navigate('Form')}>
+                  <View style={{overflow: 'hidden'}}>
+                    <View style={styles.item}>
+                      <Text style={styles.title}>{listData[item]?.date}</Text>
+                      <Text
+                        style={[
+                          styles.title,
+                          {paddingLeft: '50%', color: '#0275d8'},
+                        ]}>
+                        +{listData[item]?.amount}RUB
+                      </Text>
+                    </View>
+                    <Text style={{marginTop: -18}} numberOfLines={1}>
+                      _________________________________________________________________
+                    </Text>
+                  </View>
+                </TouchableOpacity>
               </>
             );
           }}
@@ -61,13 +77,17 @@ const ContributionList = props => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
+    marginTop: -100,
+    overflow: 'hidden',
   },
   item: {
     padding: 25,
-    marginVertical: 4,
+    marginVertical: 6,
     marginHorizontal: 22,
     borderRadius: 15,
+    flexDirection: 'row',
+    // display:'flex',
+    // justifyContent:'center',
   },
   title: {
     fontSize: 20,

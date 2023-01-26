@@ -19,7 +19,7 @@ const App = () => {
         <Tab.Screen name="contributionList" component={ContributionList} />
         <Tab.Screen name="Form" component={ContributionForm} />
         <Tab.Screen name="AddGoals" component={AddGoals} />
-        <Tab.Screen name="GoalsInfo" component={GoalsInfo} />
+        {/* <Tab.Screen name="GoalsInfo" component={GoalsInfo} /> */}
       </Tab.Navigator>
     </NavigationContainer>
   );

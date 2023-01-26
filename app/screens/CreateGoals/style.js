@@ -67,6 +67,8 @@ const styles = StyleSheet.create({
   GoalsDataText: {
     paddingLeft: 150,
     fontWeight: 'bold',
+    fontSize: 15,
+    fontFamily: 'serif',
   },
   SavingMeet: {
     paddingLeft: 100,
@@ -81,16 +83,23 @@ const styles = StyleSheet.create({
   inputBox: {
     height: 40,
     margin: 12,
-    borderWidth: 1,
+    borderWidth: 2,
     padding: 10,
-    borderColor: 'grey',
+    borderColor: 'black',
+    // marginTop: 20,
   },
-  button: {
+  buttoninfo: {
     paddingTop: 100,
     margin: 12,
     height: 20,
     padding: 10,
-    color: '#f194ff',
+    backgroundColor: 'green',
+    color: 'white',
+    fontSize: 20,
+    fontFamily: 'Serif',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    borderRadius: 10,
   },
 });
 export default styles;

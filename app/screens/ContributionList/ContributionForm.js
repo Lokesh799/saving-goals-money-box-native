@@ -78,6 +78,10 @@ const ContributionForm = () => {
         submitHandler={submitHandler}
       />
       <View style={{top: '5%'}}>
+        <Text style={{paddingLeft: 20, fontSize: 16, fontFamily: 'serif'}}>
+          {' '}
+          Amount
+        </Text>
         <TextInput
           placeholder="Amount*"
           style={styles.inputBox}
@@ -87,9 +91,14 @@ const ContributionForm = () => {
           value={contributionData?.amount}
         />
 
-        <Text style={{paddingLeft: 20}}> *Negative decreases savings</Text>
+        <Text style={{paddingLeft: 20, fontSize: 16, fontFamily: 'serif'}}>
+          {' '}
+          *Negative decreases savings
+        </Text>
         <View style={{marginTop: 20}}>
-          <Text style={{paddingLeft: 20}}>Comment</Text>
+          <Text style={{paddingLeft: 20, fontSize: 16, fontFamily: 'serif'}}>
+            Comment
+          </Text>
           <TextInput
             placeholder="enter your comment here"
             style={styles.inputBox}
@@ -98,9 +107,16 @@ const ContributionForm = () => {
             }
             value={contributionData?.comment}
           />
-          <Text style={{paddingLeft: 20}}> DATE</Text>
+          <Text style={{paddingLeft: 20, fontSize: 16, fontFamily: 'serif'}}>
+            {' '}
+            DATE
+          </Text>
           <TouchableOpacity
-            style={{...style.touchableContainer, borderTopWidth: 1}}
+            style={{
+              ...style.touchableContainer,
+              borderTopWidth: 2,
+              marginTop: 10,
+            }}
             onPress={() => setShowCalendar(!showCalendar)}>
             <Text style={style.touchableText}>{dateToshow}</Text>
             <Text>📅</Text>

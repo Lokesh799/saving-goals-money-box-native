@@ -14,7 +14,7 @@ const SharedHeader = ({
   console.log('djfnjdf', submitHandler);
   const navigation = useNavigation();
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {overflow: 'hidden', zIndex: 1}]}>
       <AntDesign
         name={iconLeft}
         size={30}
@@ -34,8 +34,7 @@ const SharedHeader = ({
             onPress={() =>
               title == 'Add Contribution'
                 ? submitHandler()
-                :
-              navigation.navigate(navigationRight)
+                : navigation.navigate(navigationRight)
             }
           />
         </TouchableOpacity>
@@ -44,19 +43,9 @@ const SharedHeader = ({
   );
 };
 
-const AddGoalsBtn = ({props, mainHeaderstate, listHeader, infoHeader}) => {
-  const navigation = useNavigation();
-  return (
-    <>
-      {/* {mainHeaderstate && <MainHeader {...props} />} */}
-      {listHeader && <ListHeader {...props} />}
-      {infoHeader && <GoalInfoHeader {...props} />}
-    </>
-  );
-};
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#0d0d0d',
+    backgroundColor: '#454545',
     flexDirection: 'row',
     textAlign: 'center',
     height: 80,
@@ -74,17 +63,9 @@ const styles = StyleSheet.create({
     fontSize: 25,
     paddingTop: 20,
     textAlign: 'right',
-    fontStyle: 'italic',
-    fontWeight: 'bold',
+    fontFamily: 'Serif',
     marginRight: 20,
-  },
-  headertxtInfo: {
-    color: 'white',
-    fontSize: 25,
-    paddingTop: 20,
-    textAlign: 'center',
-    fontStyle: 'italic',
-    fontWeight: 'bold',
+
   },
   plusbtn: {
     color: 'white',
@@ -92,14 +73,6 @@ const styles = StyleSheet.create({
     paddingRight: 15,
     textAlign: 'right',
     marginRight: 50,
-    paddingTop: 20,
-  },
-  plusbtnmain: {
-    color: 'white',
-    fontSize: 32,
-    paddingRight: 15,
-    textAlign: 'right',
-    marginRight: 30,
     paddingTop: 20,
   },
   back: {

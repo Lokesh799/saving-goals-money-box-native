@@ -1,8 +1,9 @@
-import {View, Text, Button} from 'react-native';
+import {View, Text, Button, StyleSheet} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import React, {useState} from 'react';
 import styles from './style';
 import {DataTable} from 'react-native-paper';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const GoalsInfo = () => {
   const navigation = useNavigation();
@@ -10,37 +11,77 @@ const GoalsInfo = () => {
     <>
       <View style={{marginTop: 40}}>
         <DataTable style={{padding: 5}}>
-          <DataTable.Header style={{backgroundColor: '#DCDCDC'}}>
-            <DataTable.Title>GOAL INFO</DataTable.Title>
-          </DataTable.Header>
-          <Text>Savings account</Text>
+          <Text style={styless.title}> GOAL INFO</Text>
+          <Text style={{fontSize: 18, fontFamily: 'serif', marginTop: 5}}>
+            Savings account
+          </Text>
           <Text>_________________________________________________________</Text>
           <View style={styles.GoalsDataView}>
-            <Text>Savings frequency</Text>
+            <Text style={{fontSize: 14, fontFamily: 'serif'}}>
+              Savings frequency
+            </Text>
             <Text style={styles.GoalsDataText}>Not Planned</Text>
           </View>
           <Text>_________________________________________________________</Text>
           <View style={styles.GoalsDataView}>
-            <Text>Reminder time</Text>
+            <Text
+              style={{fontSize: 14, fontFamily: 'serif', fontStyle: 'bold'}}>
+              Reminder time
+            </Text>
             <Text style={styles.GoalsDataText}>Reminder not set</Text>
           </View>
           <Text>_________________________________________________________</Text>
         </DataTable>
-        <View>
-          <Text style={styles.SavingMeet}>
+        <TouchableOpacity style={styless.btnArea}>
+          <Text style={styless.infoText}>
             {' '}
-            Savings needed to meet the goal
+            Savings needed to meet the goal{' '}
           </Text>
-          <Text style={styles.YetPlanned}> Yet not Planned</Text>
-        </View>
+          <Text style={styless.infoText}> Yet not Planned </Text>
+          <Text
+            onPress={() => navigation.navigate('contributionList')}
+            style={styless.addGoalBtn}>
+            Goal Contribution
+          </Text>
+        </TouchableOpacity>
       </View>
-      <Button
-        style={styles.button}
-        title="Goal Contribution"
-        onPress={() => navigation.navigate('contributionList')}
-      />
     </>
   );
 };
 
+const styless = StyleSheet.create({
+  addGoalBtn: {
+    backgroundColor: 'green',
+    color: 'white',
+    fontSize: 20,
+    fontFamily: 'Serif',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    width: '90%',
+    borderRadius: 4,
+    height: 50,
+    padding: 10,
+    marginTop: 100,
+  },
+  btnArea: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '95%',
+  },
+  infoText: {
+    marginBottom: 20,
+    fontSize: 20,
+    fontFamily: 'Cochin',
+    fontWeight: 'bold',
+  },
+  title: {
+    backgroundColor: '#C0C0C0',
+    fontSize: 20,
+    fontFamily: 'Cochin',
+    fontWeight: 'bold',
+    height: 50,
+    textAlign: 'center',
+    padding: 10,
+  },
+});
 export default GoalsInfo;

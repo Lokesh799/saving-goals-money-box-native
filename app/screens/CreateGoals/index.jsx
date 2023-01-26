@@ -15,7 +15,8 @@ const GoalsMain = props => {
         <SharedHeader
           title="Goals"
           iconLeft="left"
-          navigationLeft="GoalsInfo"
+          navigationLeft="Settings"
+          iconRight="filter"
         />
         <View style={styles.container}>
           <ProfileGoals setGoalsinfo={setGoalsinfo} />
