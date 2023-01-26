@@ -1,15 +1,11 @@
 import React from 'react';
 
-// Importing components and screen
-// import ContributionList from './app/components/ContributionList';
 import ContributionList from './app/screens/ContributionList';
 import CreatGoals from './app/screens/CreateGoals';
 import MainScreen from './app/screens/MainScreen';
 import ContributionForm from './app/screens/ContributionList/ContributionForm';
-import AddGoals from './app/components/AddGoal/index';
+import AddGoals from './app/screens/AddGoal/index';
 import GoalsInfo from './app/screens/CreateGoals/GoalInfo';
-
-// importing modules and library
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
 

@@ -4,12 +4,15 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
+  Alert,
 } from 'react-native';
 import React, {useState, forwardRef, useEffect} from 'react';
 import styles from '../../screens/CreateGoals/style';
 import {useNavigation} from '@react-navigation/native';
 import {Calendar} from 'react-native-calendars';
 import {AsyncStorage} from 'react-native';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import SharedHeader from '../../sharedHeader';
 
 const ContributionForm = () => {
   const navigation = useNavigation();
@@ -48,6 +51,7 @@ const ContributionForm = () => {
   const storeUser = async data => {
     try {
       await AsyncStorage.setItem('user', JSON.stringify(data));
+      console.log('user', user);
     } catch (error) {
       console.log(error);
     }
@@ -66,76 +70,61 @@ const ContributionForm = () => {
 
   return (
     <View style={{marginTop: 0}}>
-      <View style={style.container}>
-        <View style={style.view3}>
-          <TouchableOpacity>
-            <Text
-              style={style.closeContainer}
-              onPress={() => {
-                navigation.navigate('contributionList');
-                setContributionGoalData({comment: '', amount: null, date: ''});
-              }}>
-              x
-            </Text>
-          </TouchableOpacity>
-        </View>
-        <View style={style.view1}>
-          <Text style={style.headertxt}> Add Contribution </Text>
-        </View>
-
-        <View style={style.view2}>
-          <TouchableOpacity>
-            <Text style={style.saveContainer} onPress={submitHandler}>
-              ✔️
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </View>
-      <TextInput
-        placeholder="Amount*"
-        style={styles.inputBox}
-        onChangeText={amount =>
-          setContributionGoalData({...contributionData, amount: amount})
-        }
-        value={contributionData?.amount}
+      <SharedHeader
+        title="Add Contribution"
+        iconLeft="close"
+        navigationLeft="contributionList"
+        iconRight="check"
+        submitHandler={submitHandler}
       />
-      <Text style={{paddingLeft: 20}}> *Negative decreases savings</Text>
-      <View style={{marginTop: 20}}>
-        <Text style={{paddingLeft: 20}}>Comment</Text>
+      <View style={{top: '5%'}}>
         <TextInput
-          placeholder="enter your comment here"
+          placeholder="Amount*"
           style={styles.inputBox}
-          onChangeText={comment =>
-            setContributionGoalData({...contributionData, comment: comment})
+          onChangeText={amount =>
+            setContributionGoalData({...contributionData, amount: amount})
           }
-          value={contributionData?.comment}
+          value={contributionData?.amount}
         />
-        <Text style={{paddingLeft: 20}}> DATE</Text>
-        <TouchableOpacity
-          style={{...style.touchableContainer, borderTopWidth: 1}}
-          onPress={() => setShowCalendar(!showCalendar)}>
-          <Text style={style.touchableText}>{dateToshow}</Text>
-          <Text>📅</Text>
-        </TouchableOpacity>
-        {showCalendar && (
-          <Calendar
-            style={{
-              borderRadius: 10,
-              elevation: 4,
-              margin: 20,
-              paddingRight: 20,
-            }}
-            onDayPress={day => {
-              setContributionGoalData({
-                ...contributionData,
-                date: day.dateString,
-              });
-              setShowCalendar(false);
-            }}
-            markedDates={{[contributionData.date]: {selected: true}}}
-            date={contributionData.date}
+
+        <Text style={{paddingLeft: 20}}> *Negative decreases savings</Text>
+        <View style={{marginTop: 20}}>
+          <Text style={{paddingLeft: 20}}>Comment</Text>
+          <TextInput
+            placeholder="enter your comment here"
+            style={styles.inputBox}
+            onChangeText={comment =>
+              setContributionGoalData({...contributionData, comment: comment})
+            }
+            value={contributionData?.comment}
           />
-        )}
+          <Text style={{paddingLeft: 20}}> DATE</Text>
+          <TouchableOpacity
+            style={{...style.touchableContainer, borderTopWidth: 1}}
+            onPress={() => setShowCalendar(!showCalendar)}>
+            <Text style={style.touchableText}>{dateToshow}</Text>
+            <Text>📅</Text>
+          </TouchableOpacity>
+          {showCalendar && (
+            <Calendar
+              style={{
+                borderRadius: 10,
+                elevation: 4,
+                margin: 20,
+                paddingRight: 20,
+              }}
+              onDayPress={day => {
+                setContributionGoalData({
+                  ...contributionData,
+                  date: day.dateString,
+                });
+                setShowCalendar(false);
+              }}
+              markedDates={{[contributionData.date]: {selected: true}}}
+              date={contributionData.date}
+            />
+          )}
+        </View>
       </View>
     </View>
   );
@@ -209,6 +198,14 @@ const style = StyleSheet.create({
     paddingTop: 15,
     marginBottom: 6,
     textAlign: 'right',
+  },
+  plusbtnmain: {
+    color: 'white',
+    fontSize: 32,
+    paddingRight: 15,
+    textAlign: 'right',
+    marginRight: 0,
+    paddingTop: 0,
   },
 });
 

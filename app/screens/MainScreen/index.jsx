@@ -8,13 +8,14 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import AddGoalsBtn from '../../components/AddGoalBtn';
+import SharedHeader from '../../sharedHeader';
+
 const MainScreen = props => {
   const navigation = useNavigation();
-  const [mainHeader, setMainHeader] = useState(true);
+
   return (
     <View>
-      <AddGoalsBtn mainHeaderstate={mainHeader} />
+      <SharedHeader iconRight="plus" navigationRight="AddGoals" title="Goals" />
       <ImageBackground
         source={{
           uri: 'https://img.lovepik.com/free-png/20210918/lovepik-vector-archery-png-image_400178690_wh300.png',
