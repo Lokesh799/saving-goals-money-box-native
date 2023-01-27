@@ -6,13 +6,15 @@ import {
   StyleSheet,
   Alert,
 } from 'react-native';
-import React, {useState, forwardRef, useEffect} from 'react';
+import React, {useState, forwardRef, useEffect, useMemo} from 'react';
 import styles from '../../screens/CreateGoals/style';
 import {useNavigation} from '@react-navigation/native';
 import {Calendar} from 'react-native-calendars';
 import {AsyncStorage} from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import SharedHeader from '../../sharedHeader';
+import uuid from "react-native-uuid";
+
 
 const ContributionForm = () => {
   const navigation = useNavigation();
@@ -20,6 +22,7 @@ const ContributionForm = () => {
     amount: null,
     date: '',
     comment: '',
+    id: uuid.v1(),
   });
   const [newData, setNewData] = useState();
   const [showCalendar, setShowCalendar] = useState(false);
@@ -29,7 +32,6 @@ const ContributionForm = () => {
 
   useEffect(() => {
     getUser();
-    console.log('newData', newData);
   }, []);
 
   const submitHandler = () => {
@@ -40,18 +42,24 @@ const ContributionForm = () => {
       alert('Please fill Goal amount');
       return;
     }
-
-    setContributionGoalData({comment: '', amount: null, date: ''});
     alert('Your Data saved successfully');
     navigation.navigate('contributionList');
-    let data = [...newData, contributionData];
-    storeUser(data);
+    // let data = [...newData, contributionData];
+    setNewData([...newData], contributionData);
+    newData.push(contributionData);
+
+    storeUser(newData);
+
+    setContributionGoalData({comment: '', amount: null, date: ''});
   };
 
-  const storeUser = async data => {
+  // console.log('contributionDatacontributionData', newData);
+
+  const storeUser = async newData => {
+    // console.log('storwedata', newData);
     try {
-      await AsyncStorage.setItem('user', JSON.stringify(data));
-      console.log('user', user);
+      await AsyncStorage.setItem('user', JSON.stringify(newData));
+      // console.log('user', user);
     } catch (error) {
       console.log(error);
     }
@@ -61,7 +69,7 @@ const ContributionForm = () => {
     try {
       const savedUser = await AsyncStorage.getItem('user');
       const currentUser = JSON.parse(savedUser);
-      console.log(currentUser, 'hheeeeeh');
+      // console.log(currentUser, 'hheeeeeh');
       setNewData(currentUser);
     } catch (error) {
       console.log(error);

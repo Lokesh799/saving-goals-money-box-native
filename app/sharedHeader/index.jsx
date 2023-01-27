@@ -11,7 +11,7 @@ const SharedHeader = ({
   navigationLeft,
   submitHandler,
 }) => {
-  console.log('djfnjdf', submitHandler);
+  // console.log('djfnjdf', submitHandler);
   const navigation = useNavigation();
   return (
     <View style={[styles.container, {overflow: 'hidden', zIndex: 1}]}>
