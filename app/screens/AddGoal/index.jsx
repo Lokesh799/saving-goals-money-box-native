@@ -10,6 +10,8 @@ import {
 import {Calendar} from 'react-native-calendars';
 import {useNavigation} from '@react-navigation/native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import SharedHeader from '../../sharedHeader';
 
 const AddGoals = () => {
   const [goalData, setGoalData] = useState({
@@ -22,8 +24,8 @@ const AddGoals = () => {
   const dateToshow = goalData.date
     ? 'Selected Date:- ' + goalData.date
     : 'Select Date';
-
-  const submitHandler = () => {
+  let goals = [];
+  const submitHandler = async () => {
     if (goalData.title === '') {
       alert('Please fill Goal title');
       return;
@@ -34,38 +36,35 @@ const AddGoals = () => {
       alert('Please select Target Date');
       return;
     }
-    setGoalData({title: '', amount: null, date: ''});
+    let tempGoals = [];
+    let x = JSON.parse(await AsyncStorage.getItem('goals'));
+    tempGoals = x;
+    tempGoals?.map(item => {
+      goals.push(item);
+    });
+    goals.push({
+      id: Math.random(),
+      title: goalData.title,
+      date: goalData.date,
+      amount: goalData.amount,
+    });
+    await AsyncStorage.setItem('goals', JSON.stringify(goals));
     alert('Your Data saved successfully');
-    navigation.navigate('MainScreen');
+    setGoalData({title: '', amount: null, date: ''});
+    navigation.navigate('Settings');
     console.log(goalData, 'goalData');
   };
 
   return (
     <SafeAreaView>
       <View style={styles.container}>
-        <View style={styles.view3}>
-          <TouchableOpacity>
-            <Text
-              style={styles.closeContainer}
-              onPress={() => {
-                navigation.navigate('MainScreen');
-                setGoalData({title: '', amount: null, date: ''});
-              }}>
-              x
-            </Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.view1}>
-          <Text style={styles.headertxt}> Add Goals </Text>
-        </View>
-
-        <View style={styles.view2}>
-          <TouchableOpacity>
-            <Text style={styles.saveContainer} onPress={submitHandler}>
-              ✔️
-            </Text>
-          </TouchableOpacity>
-        </View>
+      <SharedHeader
+        title="Add Goals"
+        iconLeft="close"
+        navigationLeft="MainScreen"
+        iconRight="check"
+        submitHandler={submitHandler}
+      />
       </View>
       <AntDesign name="camera" size={50} style={{marginLeft: 180}} />
       <Text style={styles.headingContainer}>TITLE OF GOAL</Text>
@@ -118,10 +117,6 @@ const styles = StyleSheet.create({
     padding: 10,
     width: 500,
   },
-  borderContainer: {
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-  },
   touchableContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -136,44 +131,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '600',
   },
-  targetDateContainer: {
-    width: 50,
-  },
   container: {
     backgroundColor: '#0d0d0d',
     flexDirection: 'row',
-  },
-  view1: {
-    width: 235,
-  },
-  view2: {
-    textAlign: 'right',
-    width: 120,
-  },
-  view3: {
-    width: 50,
-  },
-  headertxt: {
-    color: 'white',
-    fontSize: 28,
-    paddingTop: 5,
-    textAlign: 'right',
-    fontWeight: 'bold',
-  },
-  closeContainer: {
-    color: 'white',
-    fontSize: 35,
-    paddingRight: 15,
-    marginBottom: 6,
-    textAlign: 'right',
-  },
-  saveContainer: {
-    color: 'white',
-    fontSize: 20,
-    paddingRight: 15,
-    paddingTop: 15,
-    marginBottom: 6,
-    textAlign: 'right',
   },
 });
 

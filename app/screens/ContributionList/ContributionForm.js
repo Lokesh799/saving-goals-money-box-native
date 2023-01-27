@@ -4,14 +4,12 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
-  Alert,
 } from 'react-native';
 import React, {useState, forwardRef, useEffect, useMemo} from 'react';
 import styles from '../../screens/CreateGoals/style';
 import {useNavigation} from '@react-navigation/native';
 import {Calendar} from 'react-native-calendars';
 import {AsyncStorage} from 'react-native';
-import AntDesign from 'react-native-vector-icons/AntDesign';
 import SharedHeader from '../../sharedHeader';
 import uuid from "react-native-uuid";
 
@@ -69,7 +67,6 @@ const ContributionForm = () => {
     try {
       const savedUser = await AsyncStorage.getItem('user');
       const currentUser = JSON.parse(savedUser);
-      // console.log(currentUser, 'hheeeeeh');
       setNewData(currentUser);
     } catch (error) {
       console.log(error);

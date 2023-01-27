@@ -6,7 +6,7 @@ import CreateGoals from './CreateGoals';
 import ProfileGoals from './ProfileGoal';
 import SharedHeader from '../../sharedHeader';
 
-const GoalsMain = props => {
+const GoalsMain = () => {
   const [goalsInfo, setGoalsinfo] = useState(false);
 
   return (
@@ -14,8 +14,9 @@ const GoalsMain = props => {
       <SafeAreaView>
         <SharedHeader
           title="Goals"
+          navigationLeft="MainScreen"
           iconLeft="left"
-          navigationLeft="Settings"
+          // navigationLeft="Settings"
           iconRight="filter"
         />
         <View style={styles.container}>

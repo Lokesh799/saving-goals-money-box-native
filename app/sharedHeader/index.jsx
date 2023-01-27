@@ -11,8 +11,16 @@ const SharedHeader = ({
   navigationLeft,
   submitHandler,
 }) => {
-  // console.log('djfnjdf', submitHandler);
   const navigation = useNavigation();
+  const onPressRightButton = () => {
+    if (title === 'Add Contribution') {
+      submitHandler();
+    } else if (title === 'Add Goals') {
+      submitHandler();
+    } else {
+      navigation.navigate(navigationRight);
+    }
+  };
   return (
     <View style={[styles.container, {overflow: 'hidden', zIndex: 1}]}>
       <AntDesign
@@ -31,11 +39,7 @@ const SharedHeader = ({
             name={iconRight}
             size={30}
             style={styles.plusbtn}
-            onPress={() =>
-              title == 'Add Contribution'
-                ? submitHandler()
-                : navigation.navigate(navigationRight)
-            }
+            onPress={onPressRightButton}
           />
         </TouchableOpacity>
       </View>
