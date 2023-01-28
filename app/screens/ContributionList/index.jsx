@@ -12,20 +12,17 @@ import {Icon} from 'react-native-elements';
 import AddGoalsBtn from '../../sharedHeader';
 import SharedHeader from '../../sharedHeader';
 import {AsyncStorage} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
 
 const ContributionList = props => {
   const navigation = useNavigation();
   const [selectedId, setSelectedId] = useState();
   const [listData, setListData] = useState();
-
-  useEffect(() => {
-    getUser();
-  }, []);
+  const isFocused = useIsFocused();
 
   const getUser = async () => {
     try {
-      const savedUser = await AsyncStorage.getItem('user');
+      const savedUser = await AsyncStorage.getItem('contribution');
       const currentUser = JSON.parse(savedUser);
       setListData(currentUser);
     } catch (error) {
@@ -33,7 +30,12 @@ const ContributionList = props => {
     }
   };
 
-  console.log('listDataupdate', listData);
+  useEffect(() => {
+    getUser();
+  }, [isFocused]);
+
+  // console.log('listdatata', listData);
+
   return (
     <>
       <SharedHeader
@@ -48,9 +50,17 @@ const ContributionList = props => {
           style={{overflow: 'hidden'}}
           data={Object?.keys(listData || {})}
           renderItem={({item}) => {
+            // console.log('herehreherhridididid', listData[item]?.id);
+
             return (
               <>
-                <TouchableOpacity onPress={() => navigation.navigate('Form')}>
+                <TouchableOpacity
+                  onPress={() => {
+                    // console.log('listData[item]?.id', listData[item]?.id);
+                    if (listData[item]?.id)
+                      navigation.navigate('Form', {id: listData[item]?.id});
+                    else console.log('Do not have ID');
+                  }}>
                   <View style={{overflow: 'hidden'}}>
                     <View style={styles.item}>
                       <Text style={styles.title}>{listData[item]?.date}</Text>

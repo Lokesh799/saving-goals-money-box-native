@@ -7,32 +7,54 @@ import {
 } from 'react-native';
 import React, {useState, forwardRef, useEffect, useMemo} from 'react';
 import styles from '../../screens/CreateGoals/style';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useIsFocused} from '@react-navigation/native';
 import {Calendar} from 'react-native-calendars';
-import {AsyncStorage} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import SharedHeader from '../../sharedHeader';
-import uuid from "react-native-uuid";
 
+const ContributionForm = props => {
+  let id = props.route.params?.id;
 
-const ContributionForm = () => {
+  console.log('id', id);
+
   const navigation = useNavigation();
   const [contributionData, setContributionGoalData] = useState({
     amount: null,
     date: '',
     comment: '',
-    id: uuid.v1(),
   });
   const [newData, setNewData] = useState();
   const [showCalendar, setShowCalendar] = useState(false);
+  const isFocused = useIsFocused();
+
   const dateToshow = contributionData.date
     ? 'Selected Date:- ' + contributionData.date
     : 'Select Date';
 
+  let contributeData = [];
+
   useEffect(() => {
     getUser();
-  }, []);
+    // updateUser();
+  }, [isFocused]);
 
-  const submitHandler = () => {
+  // const updateUser = () => {
+  //   const object =
+  //     newData &&
+  //     newData.find(data => {
+  //       return data?.id == id;
+  //     });
+  //   if (id) {
+  //     setContributionGoalData({
+  //       id: id,
+  //       amount: object?.amount,
+  //       date: object?.date,
+  //       comment: object?.comment,
+  //     });
+  //   }
+  // };
+
+  const submitHandler = async () => {
     if (contributionData.date === '') {
       alert('Please select Target Date');
       return;
@@ -40,32 +62,36 @@ const ContributionForm = () => {
       alert('Please fill Goal amount');
       return;
     }
+
+    let contribution = [];
+    let x = JSON.parse(await AsyncStorage.getItem('contribution'));
+    contribution = x;
+    contribution?.map(item => {
+      contributeData.push(item);
+    });
+    // if (id) {
+    //   contributeData.push({
+    //     id: id,
+    //     comment: contributionData.comment,
+    //     date: contributionData.date,
+    //     amount: contributionData.amount,
+    //   });
+    // }
+    contributeData.push({
+      id: Math.random(),
+      comment: contributionData.comment,
+      date: contributionData.date,
+      amount: contributionData.amount,
+    });
+    await AsyncStorage.setItem('contribution', JSON.stringify(contributeData));
     alert('Your Data saved successfully');
-    navigation.navigate('contributionList');
-    // let data = [...newData, contributionData];
-    setNewData([...newData], contributionData);
-    newData.push(contributionData);
-
-    storeUser(newData);
-
     setContributionGoalData({comment: '', amount: null, date: ''});
-  };
-
-  // console.log('contributionDatacontributionData', newData);
-
-  const storeUser = async newData => {
-    // console.log('storwedata', newData);
-    try {
-      await AsyncStorage.setItem('user', JSON.stringify(newData));
-      // console.log('user', user);
-    } catch (error) {
-      console.log(error);
-    }
+    navigation.navigate('contributionList');
   };
 
   const getUser = async () => {
     try {
-      const savedUser = await AsyncStorage.getItem('user');
+      const savedUser = await AsyncStorage.getItem('contribution');
       const currentUser = JSON.parse(savedUser);
       setNewData(currentUser);
     } catch (error) {
