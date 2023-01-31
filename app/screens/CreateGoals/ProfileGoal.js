@@ -18,7 +18,7 @@ const ProfileGoals = () => {
   useEffect(() => {
     findGoal();
     getGoalDetails();
-  }, [isFocused]);
+  }, []);
 
   const deleteGoal = async index => {
     const tempData = goalsList;
@@ -45,7 +45,6 @@ const ProfileGoals = () => {
         goalsList[index].percentbar = goalsList[index].percent / 100;
         setGoalsList([...goalsList]);
       })
-      console.log(goalsList);
     } catch (error) {
       console.log(error);
     }
