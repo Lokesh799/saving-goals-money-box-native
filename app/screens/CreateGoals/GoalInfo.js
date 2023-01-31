@@ -4,11 +4,58 @@ import React, {useState} from 'react';
 import styles from './style';
 import {DataTable} from 'react-native-paper';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
+import SharedHeader from '../../sharedHeader';
 
-const GoalsInfo = () => {
+const GoalsInfo = props => {
+  let goalInfo = props.route.params?.title;
+
   const navigation = useNavigation();
   return (
     <>
+      <SharedHeader
+        title="Goals info"
+        navigationLeft="Settings"
+        iconLeft="left"
+        // navigationLeft="Settings"
+        iconRight="filter"
+      />
+      <View style={styles.boxContainer}>
+        <TouchableOpacity>
+          <View style={styles.boxStyle}>
+            <View
+              style={{
+                backgroundColor: '#EDEADE',
+                alignContent: 'center',
+                marginLeft: 20,
+                width: 40,
+                borderRadius: 50,
+                marginBottom: 30,
+              }}>
+              <Icon
+                name="person"
+                style={{textAlign: 'center', justifyContent: 'center'}}
+                color="#000"
+                size={30}
+              />
+            </View>
+            <View
+              style={{
+                paddingRight: '50%',
+                cursor: 'pointer',
+                marginBottom: 50,
+              }}>
+              <Text style={{fontWeight: '700', color: '#000', fontSize: 20}}>
+                {goalInfo?.title}
+              </Text>
+              <Text>by {goalInfo?.date}</Text>
+              <Text>{goalInfo?.amount}</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
+      </View>
+
       <View style={{marginTop: 40}}>
         <DataTable style={{padding: 5}}>
           <Text style={styless.title}> GOAL INFO</Text>
@@ -39,7 +86,9 @@ const GoalsInfo = () => {
           </Text>
           <Text style={styless.infoText}> Yet not Planned </Text>
           <Text
-            onPress={() => navigation.navigate('contributionList')}
+            onPress={() =>
+              navigation.navigate('contributionList', {title: goalInfo.title})
+            }
             style={styless.addGoalBtn}>
             Goal Contribution
           </Text>

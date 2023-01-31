@@ -6,7 +6,7 @@ import CreateGoals from './CreateGoals';
 import ProfileGoals from './ProfileGoal';
 import SharedHeader from '../../sharedHeader';
 
-const GoalsMain = () => {
+const GoalsMain = props => {
   const [goalsInfo, setGoalsinfo] = useState(false);
 
   return (

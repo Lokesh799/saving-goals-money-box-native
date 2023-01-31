@@ -5,18 +5,17 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
-import React, {useState, forwardRef, useEffect, useMemo} from 'react';
+import React, {useState, useEffect} from 'react';
 import styles from '../../screens/CreateGoals/style';
 import {useNavigation, useIsFocused} from '@react-navigation/native';
 import {Calendar} from 'react-native-calendars';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import SharedHeader from '../../sharedHeader';
+import {useRef} from 'react';
 
 const ContributionForm = props => {
-  let id = props.route.params?.id;
-
-  console.log('id', id);
-
+  let isId = props.route.params;
+  let isTitle = props.route.params?.isTitle;
   const navigation = useNavigation();
   const [contributionData, setContributionGoalData] = useState({
     amount: null,
@@ -24,6 +23,8 @@ const ContributionForm = props => {
     comment: '',
   });
   const [newData, setNewData] = useState();
+  const [id, setId] = useState();
+  const [title, setTitle] = useState(isTitle);
   const [showCalendar, setShowCalendar] = useState(false);
   const isFocused = useIsFocused();
 
@@ -35,16 +36,19 @@ const ContributionForm = props => {
 
   useEffect(() => {
     getUser();
-    // updateUser();
-  }, [isFocused]);
+    setId(isId);
+    setTitle(isTitle);
+    // removeData();
+    // loadUserData();
+  }, [isFocused, id, title]);
 
-  // const updateUser = () => {
+  // const loadUserData = () => {
   //   const object =
   //     newData &&
   //     newData.find(data => {
-  //       return data?.id == id;
+  //       return data?.id === id;
   //     });
-  //   if (id) {
+  //   if (object?.id) {
   //     setContributionGoalData({
   //       id: id,
   //       amount: object?.amount,
@@ -54,6 +58,14 @@ const ContributionForm = props => {
   //   }
   // };
 
+  // const updateUser = async () => {
+  //   let data = JSON.parse(await AsyncStorage.getItem('contribution'));
+  //   let filteredData = data.filter(item => item.id === id);
+  //   // console.log(filteredData, '--');
+  // };
+
+  console.log('jsdfhkjfg', title);
+
   const submitHandler = async () => {
     if (contributionData.date === '') {
       alert('Please select Target Date');
@@ -62,6 +74,9 @@ const ContributionForm = props => {
       alert('Please fill Goal amount');
       return;
     }
+    // else if (id) {
+    //   updateUser();
+    // }
 
     let contribution = [];
     let x = JSON.parse(await AsyncStorage.getItem('contribution'));
@@ -69,20 +84,14 @@ const ContributionForm = props => {
     contribution?.map(item => {
       contributeData.push(item);
     });
-    // if (id) {
-    //   contributeData.push({
-    //     id: id,
-    //     comment: contributionData.comment,
-    //     date: contributionData.date,
-    //     amount: contributionData.amount,
-    //   });
-    // }
     contributeData.push({
       id: Math.random(),
+      title: title,
       comment: contributionData.comment,
       date: contributionData.date,
       amount: contributionData.amount,
     });
+
     await AsyncStorage.setItem('contribution', JSON.stringify(contributeData));
     alert('Your Data saved successfully');
     setContributionGoalData({comment: '', amount: null, date: ''});
@@ -93,11 +102,20 @@ const ContributionForm = props => {
     try {
       const savedUser = await AsyncStorage.getItem('contribution');
       const currentUser = JSON.parse(savedUser);
+      console.log('curre', currentUser);
       setNewData(currentUser);
     } catch (error) {
       console.log(error);
     }
   };
+
+  // const removeData = async () => {
+  //   try {
+  //     const savedUser = await AsyncStorage.clear();
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   return (
     <View style={{marginTop: 0}}>

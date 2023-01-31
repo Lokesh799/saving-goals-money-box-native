@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
   },
   boxContainer: {
     justifyContent: 'center',
+    marginTop: 20,
     display: 'flex',
     flexDirection: 'column',
     width: '100%',

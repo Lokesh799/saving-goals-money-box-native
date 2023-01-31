@@ -2,6 +2,9 @@ import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import {useRef} from 'react';
+import {useEffect} from 'react';
+import {useState} from 'react';
 
 const SharedHeader = ({
   title,
@@ -10,15 +13,30 @@ const SharedHeader = ({
   navigationRight,
   navigationLeft,
   submitHandler,
+  isTitle,
 }) => {
   const navigation = useNavigation();
+  const [pretitle, setPreTitle] = useState(isTitle);
+
+  const prevCount = usePrevious(pretitle);
+
+  function usePrevious(value) {
+    const ref = useRef();
+    useEffect(() => {
+      ref.current = value;
+    }, [value]);
+    return ref.current;
+  }
+
   const onPressRightButton = () => {
     if (title === 'Add Contribution') {
       submitHandler();
     } else if (title === 'Add Goals') {
       submitHandler();
     } else {
-      navigation.navigate(navigationRight);
+      navigation.navigate(navigationRight, {
+        isTitle: isTitle ? isTitle : prevCount,
+      });
     }
   };
   return (
@@ -27,7 +45,7 @@ const SharedHeader = ({
         name={iconLeft}
         size={30}
         style={styles.back}
-        onPress={() => navigation.navigate(navigationLeft)}
+        onPress={() => navigation.navigate(navigationLeft, {isTitle: isTitle})}
       />
       <View style={styles.view1}>
         <Text style={styles.headertxt}> {title} </Text>
@@ -69,7 +87,6 @@ const styles = StyleSheet.create({
     textAlign: 'right',
     fontFamily: 'Serif',
     marginRight: 20,
-
   },
   plusbtn: {
     color: 'white',

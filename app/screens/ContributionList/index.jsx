@@ -15,6 +15,8 @@ import {AsyncStorage} from 'react-native';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
 
 const ContributionList = props => {
+  let title = props.route.params?.title;
+
   const navigation = useNavigation();
   const [selectedId, setSelectedId] = useState();
   const [listData, setListData] = useState();
@@ -34,7 +36,6 @@ const ContributionList = props => {
     getUser();
   }, [isFocused]);
 
-  // console.log('listdatata', listData);
 
   return (
     <>
@@ -44,22 +45,21 @@ const ContributionList = props => {
         iconLeft="left"
         iconRight="plus"
         navigationRight="Form"
+        isTitle={title}
       />
       <SafeAreaView style={styles.container}>
         <FlatList
           style={{overflow: 'hidden'}}
           data={Object?.keys(listData || {})}
           renderItem={({item}) => {
-            // console.log('herehreherhridididid', listData[item]?.id);
-
             return (
               <>
                 <TouchableOpacity
                   onPress={() => {
-                    // console.log('listData[item]?.id', listData[item]?.id);
-                    if (listData[item]?.id)
-                      navigation.navigate('Form', {id: listData[item]?.id});
-                    else console.log('Do not have ID');
+                    navigation.navigate('Form', {
+                      id: listData[item]?.id,
+                      isTitle: title,
+                    });
                   }}>
                   <View style={{overflow: 'hidden'}}>
                     <View style={styles.item}>
