@@ -63,9 +63,6 @@ const ContributionForm = props => {
   //   let filteredData = data.filter(item => item.id === id);
   //   // console.log(filteredData, '--');
   // };
-
-  console.log('jsdfhkjfg', title);
-
   const submitHandler = async () => {
     if (contributionData.date === '') {
       alert('Please select Target Date');

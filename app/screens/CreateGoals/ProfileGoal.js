@@ -1,10 +1,11 @@
-import React, {useEffect, useState} from 'react';
-import {Text, View, FlatList, TouchableOpacity} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Text, View, FlatList, TouchableOpacity } from 'react-native';
 import styles from './style';
-import {useIsFocused, useNavigation} from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Icons from 'react-native-vector-icons/MaterialCommunityIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ProgressBar, MD3Colors } from 'react-native-paper';
 
 const ProfileGoals = () => {
   const navigation = useNavigation();
@@ -16,6 +17,7 @@ const ProfileGoals = () => {
   };
   useEffect(() => {
     findGoal();
+    getGoalDetails();
   }, [isFocused]);
 
   const deleteGoal = async index => {
@@ -26,11 +28,34 @@ const ProfileGoals = () => {
     setGoalsList(selectedData);
     await AsyncStorage.setItem('goals', JSON.stringify(selectedData));
   };
+
+  const getGoalDetails = async () => {
+    try {
+      const savedgoal = await AsyncStorage.getItem('contribution');
+      const goals = JSON.parse(savedgoal);
+      let totalInstallment = 0;
+      goals.map((inst, index) => {
+        if (inst.title == goals[index].title) {
+          totalInstallment = parseInt(totalInstallment) + parseInt(inst.amount);
+        }
+      })
+      goalsList.map((value, index) => {
+        goalsList[index].percent = parseInt(totalInstallment) / parseInt(value.amount) * 100;
+        goalsList[index].totalInstallment = totalInstallment;
+        goalsList[index].percentbar = goalsList[index].percent / 100;
+        setGoalsList([...goalsList]);
+      })
+      console.log(goalsList);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <View>
       <FlatList
         data={goalsList}
-        renderItem={({item, index}) => {
+        renderItem={({ item, index }) => {
           return (
             <View style={styles.boxContainer}>
               <TouchableOpacity
@@ -53,7 +78,7 @@ const ProfileGoals = () => {
                     }}>
                     <Icon
                       name="person"
-                      style={{textAlign: 'center', justifyContent: 'center'}}
+                      style={{ textAlign: 'center', justifyContent: 'center' }}
                       color="#000"
                       size={30}
                     />
@@ -65,7 +90,7 @@ const ProfileGoals = () => {
                       marginBottom: 50,
                     }}>
                     <Text
-                      style={{fontWeight: '700', color: '#000', fontSize: 20}}>
+                      style={{ fontWeight: '700', color: '#000', fontSize: 20 }}>
                       {item.title}
                     </Text>
                     <Text>by {item.date}</Text>
@@ -76,6 +101,10 @@ const ProfileGoals = () => {
                   </TouchableOpacity>
                 </View>
               </TouchableOpacity>
+              <View style={{ width: '90%', marginBottom: 30, marginLeft: 15 }}>
+                <ProgressBar progress={item.percentbar} color={MD3Colors.error70} />
+                <Text>( Amount : {item.totalInstallment}) - {item.percent}%</Text>
+              </View>
             </View>
           );
         }}
