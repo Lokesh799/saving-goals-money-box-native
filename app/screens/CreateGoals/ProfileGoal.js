@@ -18,7 +18,7 @@ const ProfileGoals = () => {
   useEffect(() => {
     findGoal();
     getGoalDetails();
-  }, []);
+  }, [isFocused]);
 
   const deleteGoal = async index => {
     const tempData = goalsList;
